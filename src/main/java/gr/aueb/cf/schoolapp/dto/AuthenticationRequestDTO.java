@@ -7,5 +7,6 @@ import lombok.*;
 public record AuthenticationRequestDTO(
         @NotNull
         String username,
-        @NotNull String password
+        @NotNull
+        String password
 ) {}
