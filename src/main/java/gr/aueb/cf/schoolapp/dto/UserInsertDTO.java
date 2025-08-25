@@ -25,7 +25,7 @@ public record UserInsertDTO(
 
         @NotEmpty(message = "VAT number is required")
         @Pattern(regexp = "\\d{9}", message = "VAT must be a 9-digit number")
-        String vat,
+        String afm,
 
         @NotEmpty(message = "Father's name is required")
         String fatherName,
