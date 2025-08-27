@@ -1,10 +1,16 @@
 package gr.aueb.cf.schoolapp.core.filters;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class GenericFilters {
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class GenericFilters {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     private static final String DEFAULT_SORT_COLUMN = "id";
