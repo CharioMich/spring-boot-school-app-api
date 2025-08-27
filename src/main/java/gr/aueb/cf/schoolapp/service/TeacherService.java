@@ -2,6 +2,9 @@ package gr.aueb.cf.schoolapp.service;
 
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectAlreadyExists;
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectInvalidArgumentException;
+import gr.aueb.cf.schoolapp.core.filters.Paginated;
+import gr.aueb.cf.schoolapp.core.filters.TeacherFilters;
+import gr.aueb.cf.schoolapp.core.specifications.TeacherSpecification;
 import gr.aueb.cf.schoolapp.dto.TeacherInsertDTO;
 import gr.aueb.cf.schoolapp.dto.TeacherReadOnlyDTO;
 import gr.aueb.cf.schoolapp.mapper.Mapper;
@@ -19,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile; // Class which contains file bytes and metadata
 
@@ -106,6 +110,34 @@ public class TeacherService {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         return teacherRepository.findAll(pageable).map(mapper::mapToTeacherReadOnlyDTO);
+    }
+
+
+    /**
+     * @param filters custom filters
+     * @return custom Paginated container with filtered and sorted data paginated, instead of Page
+     */
+    @Transactional
+    public Paginated<TeacherReadOnlyDTO> getTeachersFilteredPaginated(TeacherFilters filters) {
+        var filtered = teacherRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
+        return new Paginated<>(filtered.map(mapper::mapToTeacherReadOnlyDTO));
+    }
+
+
+    /**
+     *
+     * @param filters our custom Teacher filters
+     * @return the filters turned into Specifications
+     */
+    private Specification<Teacher> getSpecsFromFilters(TeacherFilters filters) {
+        return (root, query, cb) -> Specification
+                .allOf(
+                        TeacherSpecification.teacherStringFieldLike("uuid", filters.getUuid()),
+                        TeacherSpecification.teacherUserAfmIs(filters.getUserAfm()),
+                        TeacherSpecification.teacherPersonalInfoAmkais(filters.getUserAmka()),
+                        TeacherSpecification.teacherIsActive(filters.getIsActive())
+                )
+                .toPredicate(root, query, cb);
     }
 
 }
