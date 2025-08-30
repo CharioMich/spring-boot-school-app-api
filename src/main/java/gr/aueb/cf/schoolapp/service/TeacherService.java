@@ -1,5 +1,6 @@
 package gr.aueb.cf.schoolapp.service;
 
+import gr.aueb.cf.schoolapp.api.TeacherRestController;
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectAlreadyExists;
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectInvalidArgumentException;
 import gr.aueb.cf.schoolapp.core.filters.Paginated;
@@ -30,7 +31,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service    // Spring - Adds instance to IOC container
 @RequiredArgsConstructor    // Lombok - creates constructor with final fields (for DI)
@@ -125,7 +128,18 @@ public class TeacherService {
 
 
     /**
-     *
+     * Same as above but
+     * @return List of Filtered Teachers without pagination
+     */
+    public List<TeacherReadOnlyDTO> getTeachersFiltered(TeacherFilters filters) {
+        return teacherRepository.findAll(getSpecsFromFilters(filters))
+                .stream()
+                .map(mapper::mapToTeacherReadOnlyDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    /**
      * @param filters our custom Teacher filters
      * @return the filters turned into Specifications
      */
