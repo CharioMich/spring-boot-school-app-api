@@ -6,7 +6,9 @@ import org.springframework.lang.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class TeacherFilters extends GenericFilters {
 
     @Nullable   // make obvious that it could be null
