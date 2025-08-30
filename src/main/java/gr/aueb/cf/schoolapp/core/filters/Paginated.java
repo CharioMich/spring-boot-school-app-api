@@ -1,12 +1,12 @@
 package gr.aueb.cf.schoolapp.core.filters;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-
+/**
+ * Custom container to use instead of 'Page<>'
+ */
 public record Paginated<T> (
         List<T> data,
         long totalElements,
