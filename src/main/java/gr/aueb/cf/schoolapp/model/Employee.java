@@ -33,7 +33,7 @@ public class Employee extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(name = "employees_edu_units") // A new join table is automatically created
     private Set<EducationalUnit> eduUnits = new HashSet<>();
 
