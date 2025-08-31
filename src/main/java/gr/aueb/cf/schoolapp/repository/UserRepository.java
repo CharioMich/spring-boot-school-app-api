@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    Optional<User> findByVat(String Vat);
+    Optional<User> findByAfm(String Vat);
     Optional<User> findByUsername(String username);
 }
