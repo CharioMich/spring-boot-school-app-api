@@ -1,6 +1,5 @@
 package gr.aueb.cf.schoolapp.service;
 
-import gr.aueb.cf.schoolapp.api.TeacherRestController;
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectAlreadyExists;
 import gr.aueb.cf.schoolapp.core.exceptions.AppObjectInvalidArgumentException;
 import gr.aueb.cf.schoolapp.core.filters.Paginated;
@@ -50,7 +49,7 @@ public class TeacherService {
     public TeacherReadOnlyDTO saveTeacher(TeacherInsertDTO teacherInsertDTO, MultipartFile amkaFile)
         throws AppObjectAlreadyExists, AppObjectInvalidArgumentException, IOException {
 
-        if (userRepository.findByVat(teacherInsertDTO.user().afm()).isPresent()) {
+        if (userRepository.findByAfm(teacherInsertDTO.user().afm()).isPresent()) {
             throw new AppObjectAlreadyExists("User", "User with vat=" + teacherInsertDTO.user().afm() + " already exists.");
         }
 
