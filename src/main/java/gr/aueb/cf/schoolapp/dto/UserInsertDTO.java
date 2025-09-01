@@ -23,8 +23,8 @@ public record UserInsertDTO(
         )
         String password,
 
-        @NotEmpty(message = "VAT number is required")
-        @Pattern(regexp = "\\d{9}", message = "VAT must be a 9-digit number")
+        @NotEmpty(message = "AFM number is required")
+        @Pattern(regexp = "\\d{9}", message = "AFM must be a 9-digit number")
         String afm,
 
         @NotEmpty(message = "Father's name is required")
