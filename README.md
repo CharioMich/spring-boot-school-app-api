@@ -1,5 +1,7 @@
 # Java Spring Boot API School Project
 
+#### A RESTful api providing CRUD operations for Users and JWT authentication
+
 ### <u> Run instructions </u> 🚀
 ⚠️ Note: A mySQL Database is required.
 
