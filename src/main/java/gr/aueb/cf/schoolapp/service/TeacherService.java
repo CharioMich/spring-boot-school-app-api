@@ -11,7 +11,6 @@ import gr.aueb.cf.schoolapp.mapper.Mapper;
 import gr.aueb.cf.schoolapp.model.Attachment;
 import gr.aueb.cf.schoolapp.model.PersonalInfo;
 import gr.aueb.cf.schoolapp.model.Teacher;
-import gr.aueb.cf.schoolapp.repository.PersonalInfoRepository;
 import gr.aueb.cf.schoolapp.repository.TeacherRepository;
 import gr.aueb.cf.schoolapp.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -42,7 +41,6 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final Mapper mapper;
     private final UserRepository userRepository;
-    private final PersonalInfoRepository personalInfoRepository;
 
     
     @Transactional(rollbackOn = {AppObjectAlreadyExists.class, IOException.class}) // In case of runtime exceptions or specified checked exceptions, rollback.
@@ -50,7 +48,7 @@ public class TeacherService {
         throws AppObjectAlreadyExists, AppObjectInvalidArgumentException, IOException {
 
         if (userRepository.findByAfm(teacherInsertDTO.user().afm()).isPresent()) {
-            throw new AppObjectAlreadyExists("User", "User with vat=" + teacherInsertDTO.user().afm() + " already exists.");
+            throw new AppObjectAlreadyExists("User", "User with afm=" + teacherInsertDTO.user().afm() + " already exists.");
         }
 
         if (userRepository.findByUsername(teacherInsertDTO.user().username()).isPresent()) {
