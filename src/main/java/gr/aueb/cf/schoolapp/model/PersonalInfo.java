@@ -29,7 +29,7 @@ public class PersonalInfo extends AbstractEntity {
     @Column(name = "municipality_of_registration")
     private String municipalityOfRegistration;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "amka_file_id")
     private Attachment amkaFile;
 }
